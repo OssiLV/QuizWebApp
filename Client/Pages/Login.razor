@@ -1,0 +1,26 @@
+﻿@page "/login"
+
+
+<MudContainer Style="display: flex; justify-content: center; align-items: center; height: 100vh; width: 100%">
+    <MudPaper Class="border pa-4" Style="height: 530px; width: 300px;">
+        <MudText Class="p-2" Align="Align.Center">Sign in with:</MudText>
+        <div Class="p-2 mt-2 d-flex gap-4" Style="justify-content: center;">
+            <MudIcon Icon="@Icons.Custom.Brands.Google" Size="Size.Small" Class="cursor-pointer" />
+            <MudIcon Icon="@Icons.Custom.Brands.GitHub" Size="Size.Small" Class="cursor-pointer" />
+            <MudIcon Icon="@Icons.Custom.Brands.Facebook" Size="Size.Small" Class="cursor-pointer" />
+        </div>
+        <MudText Class="p-2 my-2" Align="Align.Center">or:</MudText>
+        <MudPaper Class="d-flex flex-column gap-2 ">
+            @if(isRegisterPage)
+            {
+                <RegisterComponent ChangeLoginAndRegisterPage="@ChangeLoginAndRegisterPage" />
+            }
+            else
+            {
+                <LoginComponent ChangeLoginAndRegisterPage="@ChangeLoginAndRegisterPage" />
+            }
+        </MudPaper>
+    </MudPaper>
+</MudContainer>
+
+

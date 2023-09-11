@@ -1,0 +1,19 @@
+﻿
+
+<MudPaper Class="d-flex flex-column gap-2 ">
+    <MudTextField InputType="InputType.Text"
+        @bind-Value="@loginRequest.UserNameOrEmail"
+        Label="Email or UserName"
+        Variant="Variant.Outlined"
+        Class="border-bottom" />
+    <MudTextField InputType="InputType.Password"
+        @bind-Value="@loginRequest.Password"
+        Label="Password"
+        Variant="Variant.Outlined"
+        Class="border-bottom" />
+</MudPaper>
+<MudButton @onclick="LoginHandler" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6" FullWidth>Login</MudButton>
+<MudPaper Class="d-flex mt-6 pa-1 gap-2" Style="justify-content: center">
+    <MudText>Not a member yet?</MudText>
+    <MudText @onclick="@ChangeLoginAndRegisterPage" Class="cursor-pointer" style="color: #3b71ca;">Register</MudText>
+</MudPaper>

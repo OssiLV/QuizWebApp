@@ -1,0 +1,66 @@
+﻿<MudAppBar Color="Color.Primary" Fixed="false">
+    <MudText Typo="Typo.h4" Class="cursor-pointer" Style="font-weight: bolder;">Quiz</MudText>
+    <MudStack AlignItems="AlignItems.Center" Row="true" style="display: flex; justify-content: center; align-items: center;gap: 1rem; margin-left: 3rem;">
+        <MudButton OnClick="@NavigateToHome" Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true">Home</MudButton>
+        <MudPaper Elevation="0" Outlined="false" Class="" Style="background-color: transparent; border: none">
+            <MudButton OnClick="@HandleChangeStateLibrary" Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true">Your Library</MudButton>
+            <MudPopover Open="@isOpenLibrary"  AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopLeft" Paper="false">
+                <MudPaper Outlined="true" Class="overflow-y-scroll">
+                    <MudGrid Spacing="3" Class="mt-1">
+                        @foreach(var item in Quizzes)
+                        {
+                            <MudItem xs="12" Class="ma-1 cursor-pointer" Style="width: 7rem" >
+                                <MudCard>
+                                    <MudCardHeader Class="py-0">
+                                        <MudText>@item.Title</MudText>
+                                    </MudCardHeader>
+                                    <MudCardActions>
+                                        <MudAvatar Variant="Variant.Filled" Color="Color.Surface" Class="mr-2">T</MudAvatar>
+                                        <MudText Style="font-weight: bold">OssiLV</MudText>
+                                    </MudCardActions>
+                                </MudCard>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </MudPaper>
+            </MudPopover>
+        </MudPaper>
+    </MudStack>
+    <MudSpacer/> 
+
+    <MudStack AlignItems="AlignItems.Center" Row="true" style="display: flex; justify-content: center; align-items: center;gap: 1rem; margin-left: 3rem;">
+        <MudTextField @bind-Value="@searchValue" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Style="color: white" />
+        <MudIcon @onclick="@NavigateToCreateQuiz" Icon="@Icons.Material.Filled.Add" Color="Color.Surface" Class="border pa-1 cursor-pointer" Style="border-radius: 100%; font-size: 2.3rem"/>
+        <MudPaper Elevation="0" Outlined="false" Class="" Style="background-color: transparent; border: none">
+            <MudAvatar @onclick="@HandleChangeStateAvatar" Variant="Variant.Filled" Color="Color.Surface" Class="cursor-pointer">T</MudAvatar>
+            <MudPopover Open="@isOpenAvartar" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" Paper="false">
+                <MudPaper Outlined="true" Class="px-4 py-8" Style="max-width: 16rem">
+                    <MudGrid>
+                        <MudItem xs="12">
+                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                <MudAvatar Variant="Variant.Filled" Color="Color.Surface">T</MudAvatar>
+                                <div>
+                                    <MudText>@ConvertToShortString(test)</MudText>
+                                    <MudText>OssiLV</MudText>
+                                </div>
+                            </MudStack>
+                        </MudItem>
+                        <MudDivider/>
+                        <MudItem xs="12" Class="cursor-pointer" @onclick="@NavigateToProfile">
+                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                <MudIcon Icon="@Icons.Material.Filled.Person" />
+                                <MudText Typo="Typo.body1">Profile</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="12" Class="cursor-pointer" @onclick="@Logout">
+                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                <MudIcon Icon="@Icons.Material.Filled.Logout" />
+                                <MudText Typo="Typo.body1">Logout</MudText>
+                            </MudStack>
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
+            </MudPopover>
+        </MudPaper>
+    </MudStack>
+</MudAppBar>

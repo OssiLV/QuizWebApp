@@ -1,0 +1,23 @@
+﻿@page "/create-quiz"
+
+<PageTitle>Create a New Quiz</PageTitle>
+<NavMenu Quizzes="@listQuiz" />
+    
+<MudContainer Class="mt-4">
+    <MudStack Class="pa-2">
+        <MudStack Row="true" >
+            <MudText Typo="Typo.h5" Style="font-weight: bolder">Create a new Quiz</MudText>
+            <MudSpacer />
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="@AddNewQuestion">Create</MudButton>
+        </MudStack>
+        <MudPaper Elevation="0" Class="py-4">
+            <MudTextField @bind-Value="@title" Variant="Variant.Text" HelperText="Title" Placeholder="Enter a title, like 'Biology - Chapter 22: Evolution'" InputType="InputType.Text" Style="width: 24rem" />
+            <MudTextField @bind-Value="@description" Variant="Variant.Text" HelperText="Description" Placeholder="Add a description..." InputType="InputType.Text" Style="width: 24rem" />
+        </MudPaper>
+    </MudStack>
+    <MudPaper Class="border">
+        <MudDropContainer T="QuestionResponse" @ref="@_dropContainer" Items="@listQuestion" ItemDropped="@QuestionUpdated">
+
+        </MudDropContainer>
+    </MudPaper>
+</MudContainer>

@@ -1,0 +1,30 @@
+﻿<MudPaper Class="d-flex flex-column gap-1 ">
+    <MudTextField
+        InputType="InputType.Text"
+        @bind-Value="@registerRequest.UserName"
+        Label="UserName"
+        Variant="Variant.Outlined"
+        Class="border-bottom" />
+    <MudTextField
+        InputType="InputType.Email"
+        @bind-Value="@registerRequest.Email"
+        Label="Email"
+        Variant="Variant.Outlined"
+        Class="border-bottom" />
+    <MudTextField
+        InputType="InputType.Password"
+        @bind-Value="@registerRequest.Password"
+        Label="Password"
+        Variant="Variant.Outlined"
+        Class="border-bottom" /> 
+</MudPaper>
+<MudSelect @bind-Value="@registerRequest.Role" Label="Role" Placeholder="Please Select your role" AdornmentIcon="@Icons.Material.Filled.Fastfood" AdornmentColor="Color.Primary">
+    <MudSelectItem Value="@("Admin")">Admin</MudSelectItem>
+    <MudSelectItem Value="@("User")">User</MudSelectItem>
+</MudSelect>
+<MudButton @onclick="SignUpHandler" Variant="Variant.Filled" Color="Color.Primary" Class="mt-6" FullWidth>Register</MudButton>
+<MudPaper Class="d-flex mt-6 pa-1 gap-2" Style="justify-content: center">
+    <MudText>Already have an account</MudText>
+    <MudText @onclick="@TestFunc" Class="cursor-pointer" style="color: #3b71ca;">Login</MudText>
+</MudPaper>
+<MudText Typo="Typo.caption" Color="Color.Error" Class="pa-1">@responseMessage</MudText>

@@ -1,0 +1,92 @@
+﻿@page "/"
+
+@inject IJSRuntime js
+
+
+<PageTitle>Home | Quiz</PageTitle>
+
+
+<NavMenu Quizzes="@listQuiz" />
+
+<MudContainer Class="mt-4">
+    <MudText Typo="Typo.h4" Class="px-3 mb-4" Style="font-weight: bolder">Recent</MudText>
+    <MudGrid Spacing="6" Class="pa-2">
+        @* Mobile *@
+        <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+            @foreach(var item in listQuiz)
+            {
+                <MudItem xs="12">
+                    <CardComponent Quiz="item" />
+                </MudItem>
+            }
+        </MudHidden>
+
+        @* Tablet *@
+        <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+            @foreach(var item in listQuiz)
+            {
+                <MudItem xs="6">
+                    <CardComponent Quiz="item" />
+                </MudItem>
+            }
+        </MudHidden>
+        @* Desktop and up *@
+        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+            @foreach(var item in listQuiz)
+            {
+                <MudItem xs="3">
+                    <CardComponent Quiz="item" />
+                </MudItem>
+            }
+        </MudHidden>
+    </MudGrid>
+</MudContainer>
+
+
+@* <AuthorizeView>
+    <Authorized>
+        <h1>Hello, @context.User.Identity.Name!</h1>
+    </Authorized>
+    <NotAuthorized>
+        <h1>Hello, Guest!</h1>
+    </NotAuthorized>
+</AuthorizeView> *@
+
+@* <SurveyPrompt Title="How is Blazor working for you?" />
+
+<AuthorizeView>
+    <Authorized>
+        <br />
+        <button class="btn btn-outline-primary" @onclick="DisplayGreatingAlert">Display Greating Alert</button>
+        <MudButton @onclick="@Logout">Logout</MudButton>
+    </Authorized>
+</AuthorizeView> *@
+
+
+
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationState { get; set; }
+
+    private async Task DisplayGreatingAlert()
+    {
+        var authState = await authenticationState;
+        var message = $"Hello {authState.User.Identity.Name}";
+        await js.InvokeVoidAsync("alert", message);
+    }
+}
+
+@code {
+    
+}
+
+@code {
+    List<QuizResponse> listQuiz = new List<QuizResponse>
+    {
+        new QuizResponse{Id = Guid.NewGuid(), NumberOfQuestions = 2, Title = "Title_1", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, IsFavorite = true},
+        new QuizResponse{Id = Guid.NewGuid(), NumberOfQuestions = 2, Title = "Title_2", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, IsFavorite = true},
+        new QuizResponse{Id = Guid.NewGuid(), NumberOfQuestions = 2, Title = "Title_3", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, IsFavorite = true},
+        new QuizResponse{Id = Guid.NewGuid(), NumberOfQuestions = 2, Title = "Title_4", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, IsFavorite = true},
+    };
+}
