@@ -18,12 +18,12 @@ namespace QuizWebApp.Server
 
 
             // QuizCreate to Quiz
-            /*CreateMap<QuizCreateDto, Quiz>()
+            CreateMap<QuizCreateRequest, Quiz>()
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.Now))
-                .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.Now));*/
+                .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.Now));
 
-            // Quiz to QuizResponseDto
-            /* CreateMap<Quiz, QuizResponseDto>();*/
+            // QuestionCreate to Question
+            CreateMap<QuestionCreateRequest, Question>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿@using QuizWebApp.Shared.ResponseDtos;
+﻿@using QuizWebApp.Client.Extensions;
+@using QuizWebApp.Shared.ResponseDtos;
 
 <MudCard Class="cursor-pointer" Style="border-radius: 1rem">
     <MudCardHeader Class="py-0" >
@@ -8,8 +9,8 @@
         <MudChip Size="Size.Small">@Quiz.NumberOfQuestions Terms</MudChip>
     </MudCardContent>
     <MudCardActions Class="mt-2">
-        <MudAvatar Variant="Variant.Filled" Color="Color.Surface" Class="mr-2">T</MudAvatar>
-        <MudText>OssiLV</MudText>
+        <MudAvatar Variant="Variant.Filled" Color="Color.Surface" Class="mr-2">@user?.UserName.GetFirstLetter().ToUpper()</MudAvatar>
+        <MudText>@user?.UserName</MudText>
     </MudCardActions>
 </MudCard>
 

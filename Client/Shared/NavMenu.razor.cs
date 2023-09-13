@@ -11,13 +11,20 @@ namespace QuizWebApp.Client.Shared
         public List<QuizResponse> Quizzes { get; set; }
 
         [Inject]
-        AuthenticationStateProvider authStateProvider { get; set; }
+        AuthenticationStateProvider _authStateProvider { get; set; }
 
         [Inject]
-        NavigationManager navigationManager { get; set; }
+        NavigationManager _navigationManager { get; set; }
         private bool isOpenLibrary { get; set; }
         private bool isOpenAvartar { get; set; }
         private string searchValue { get; set; }
+        private UserResponse user { set; get; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)_authStateProvider;
+            user = await customAuthStateProvider.GetUserAsync();
+        }
         private void HandleChangeStateLibrary()
         {
             isOpenLibrary = !isOpenLibrary;
@@ -30,23 +37,23 @@ namespace QuizWebApp.Client.Shared
 
         private void NavigateToCreateQuiz()
         {
-            navigationManager.NavigateTo("/create-quiz");
+            _navigationManager.NavigateTo("/create-quiz");
         }
 
         private void NavigateToHome()
         {
-            navigationManager.NavigateTo("/");
+            _navigationManager.NavigateTo("/");
         }
 
         private void NavigateToProfile()
         {
-            navigationManager.NavigateTo("/profile");
+            _navigationManager.NavigateTo("/profile");
         }
         private async Task Logout()
         {
-            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)_authStateProvider;
             await customAuthStateProvider.UpdateAuthenticationState(null);
-            navigationManager.NavigateTo("/", true);
+            _navigationManager.NavigateTo("/", true);
         }
         private const string test = "vohoanganhtruong@gmail.com";
 

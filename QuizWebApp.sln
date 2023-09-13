@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizWebApp.Server", "Server\QuizWebApp.Server.csproj", "{0BBDC0E8-7AA6-478F-B7FB-7332F62168FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizWebApp.Server", "Server\QuizWebApp.Server.csproj", "{0BBDC0E8-7AA6-478F-B7FB-7332F62168FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizWebApp.Client", "Client\QuizWebApp.Client.csproj", "{D8240063-A455-4AC7-81D4-D77E520B0B64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizWebApp.Client", "Client\QuizWebApp.Client.csproj", "{D8240063-A455-4AC7-81D4-D77E520B0B64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizWebApp.Shared", "Shared\QuizWebApp.Shared.csproj", "{B00C825A-ABE8-46A2-9DE0-0DA565E1502E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizWebApp.Shared", "Shared\QuizWebApp.Shared.csproj", "{B00C825A-ABE8-46A2-9DE0-0DA565E1502E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

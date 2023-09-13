@@ -11,6 +11,7 @@ namespace QuizWebApp.Server.Data.Configs
             builder.HasAnnotation("Relational:TableName", "Quizzes");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Title).HasColumnType("nvarchar(max)").IsRequired();
+            builder.Property(x => x.Description).HasColumnType("nvarchar(max)");
 
             //For User Table
             builder.HasOne(x => x.User).WithMany(x => x.Quizzes).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);

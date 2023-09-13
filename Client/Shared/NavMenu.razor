@@ -1,4 +1,5 @@
-﻿<MudAppBar Color="Color.Primary" Fixed="false">
+﻿@using QuizWebApp.Client.Extensions;
+<MudAppBar Color="Color.Primary" Fixed="false">
     <MudText Typo="Typo.h4" Class="cursor-pointer" Style="font-weight: bolder;">Quiz</MudText>
     <MudStack AlignItems="AlignItems.Center" Row="true" style="display: flex; justify-content: center; align-items: center;gap: 1rem; margin-left: 3rem;">
         <MudButton OnClick="@NavigateToHome" Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true">Home</MudButton>
@@ -15,8 +16,14 @@
                                         <MudText>@item.Title</MudText>
                                     </MudCardHeader>
                                     <MudCardActions>
-                                        <MudAvatar Variant="Variant.Filled" Color="Color.Surface" Class="mr-2">T</MudAvatar>
-                                        <MudText Style="font-weight: bold">OssiLV</MudText>
+                                        <MudAvatar Variant="Variant.Filled" Color="Color.Surface" Class="mr-2">@user?.UserName.GetFirstLetter().ToUpper()</MudAvatar>
+                                        <MudText Style="font-weight: bold">
+                                            <AuthorizeView>
+                                                <Authorized>
+                                                    @context.User.Identity.Name
+                                                </Authorized>
+                                            </AuthorizeView>
+                                        </MudText>
                                     </MudCardActions>
                                 </MudCard>
                             </MudItem>
@@ -32,16 +39,26 @@
         <MudTextField @bind-Value="@searchValue" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Style="color: white" />
         <MudIcon @onclick="@NavigateToCreateQuiz" Icon="@Icons.Material.Filled.Add" Color="Color.Surface" Class="border pa-1 cursor-pointer" Style="border-radius: 100%; font-size: 2.3rem"/>
         <MudPaper Elevation="0" Outlined="false" Class="" Style="background-color: transparent; border: none">
-            <MudAvatar @onclick="@HandleChangeStateAvatar" Variant="Variant.Filled" Color="Color.Surface" Class="cursor-pointer">T</MudAvatar>
+            <MudAvatar @onclick="@HandleChangeStateAvatar" Variant="Variant.Filled" Color="Color.Surface" Class="cursor-pointer">@user?.UserName.GetFirstLetter().ToUpper()</MudAvatar>
             <MudPopover Open="@isOpenAvartar" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" Paper="false">
                 <MudPaper Outlined="true" Class="px-4 py-8" Style="max-width: 16rem">
                     <MudGrid>
                         <MudItem xs="12">
                             <MudStack Row="true" AlignItems="AlignItems.Center">
-                                <MudAvatar Variant="Variant.Filled" Color="Color.Surface">T</MudAvatar>
+                                <MudAvatar Variant="Variant.Filled" Color="Color.Surface">@user?.UserName.GetFirstLetter().ToUpper()</MudAvatar>
                                 <div>
-                                    <MudText>@ConvertToShortString(test)</MudText>
-                                    <MudText>OssiLV</MudText>
+                                    <AuthorizeView>
+                                        <Authorized>
+                                            <MudText>@user.Email?.ConvertToShort(18)</MudText>
+                                        </Authorized>
+                                    </AuthorizeView>
+                                    <MudText>
+                                        <AuthorizeView>
+                                            <Authorized>
+                                                @user.UserName
+                                            </Authorized>
+                                        </AuthorizeView>
+                                    </MudText>
                                 </div>
                             </MudStack>
                         </MudItem>

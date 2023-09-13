@@ -1,8 +1,11 @@
-﻿namespace QuizWebApp.Server.Services.QuizService
+﻿using QuizWebApp.Shared.RequestDtos;
+using QuizWebApp.Shared.ResponseDtos;
+
+namespace QuizWebApp.Server.Services.QuizService
 {
     public interface IQuizService
     {
-        /*Task<ResponseObjectDto> CreateQuizAsync( QuizCreateDto quizCreateDto );
-        Task<ResponseObjectDto> DeleteQuizAsync( Guid Id );*/
+        Task<ResponseObjectDto<object>> CreateQuizAsync( QuizCreateRequest quizCreateRequest );
+        /*Task<ResponseObjectDto> DeleteQuizAsync( Guid Id );*/
     }
 }

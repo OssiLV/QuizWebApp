@@ -46,6 +46,7 @@ namespace QuizWebApp.Client.Authentication
             {
                 claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
+                    new Claim(ClaimTypes.Email, userSession.Email),
                     new Claim(ClaimTypes.Name, userSession.UserName),
                     new Claim(ClaimTypes.Role, userSession.Role),
                 }));
@@ -73,6 +74,20 @@ namespace QuizWebApp.Client.Authentication
             }
             catch { }
             return resulllt;
+        }
+
+        public async Task<UserResponse> GetUserAsync()
+        {
+            UserResponse user = new UserResponse();
+            try
+            {
+                var userSession = await _sessionStorageService.ReadEncryptedItemAsync<UserResponse>("UserSession");
+                if(userSession is not null && DateTime.Now < userSession.ExpiryTimeStamp)
+                    user = userSession;
+
+            }
+            catch { }
+            return user;
         }
     }
 }
