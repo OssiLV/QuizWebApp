@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using QuizWebApp.Client.Authentication;
 using QuizWebApp.Shared.ResponseDtos;
+using System.Net.Http.Json;
 
 namespace QuizWebApp.Client.Pages
 {
@@ -12,20 +13,32 @@ namespace QuizWebApp.Client.Pages
 
         [Inject]
         NavigationManager _navigationManager { get; set; }
+        [Inject]
+        HttpClient _httpClient { get; set; }
         private UserResponse user { set; get; }
 
-        List<QuizResponse> listQuiz = new List<QuizResponse>
-        {
-            new QuizResponse{Id = Guid.NewGuid(), NumberOfQuestions = 2, Title = "Title_1", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, IsFavorite = true},
-            new QuizResponse{Id = Guid.NewGuid(), NumberOfQuestions = 2, Title = "Title_2", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, IsFavorite = true},
-            new QuizResponse{Id = Guid.NewGuid(), NumberOfQuestions = 2, Title = "Title_3", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, IsFavorite = true},
-            new QuizResponse{Id = Guid.NewGuid(), NumberOfQuestions = 2, Title = "Title_4", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, IsFavorite = true},
-        };
+        List<QuizResponse> listQuizzes { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             var customAuthStateProvider = (CustomAuthenticationStateProvider)_authStateProvider;
             user = await customAuthStateProvider.GetUserAsync();
+
+            var token = await customAuthStateProvider.GetToken();
+            if(!string.IsNullOrEmpty(token))
+            {
+
+                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+                ResponseObjectDto<List<QuizResponse>>? response = await _httpClient.GetFromJsonAsync<ResponseObjectDto<List<QuizResponse>>>($"/api/Quiz/{user.Id}/8");
+                if(response?.result is not null)
+                {
+                    listQuizzes = response.result;
+                }
+            }
+            else
+            {
+                _navigationManager.NavigateTo("/login");
+            }
         }
     }
 }

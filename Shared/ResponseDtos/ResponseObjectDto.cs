@@ -6,13 +6,11 @@
         public string message { get; set; }
         public T result { get; set; }
 
-        public ResponseObjectDto( int status, string message, T result )
+        public ResponseObjectDto( int status, string message, T? result )
         {
             this.status = status;
             this.message = message;
             this.result = result;
         }
-
-
     }
 }

@@ -1,0 +1,17 @@
+﻿
+@for(int i = 0; i < Item; i++)
+{
+    <MudListItem>
+        <MudStack>
+            <MudSkeleton />
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudSkeleton SkeletonType="SkeletonType.Circle" Width="25px" Height="25px" />
+                <MudSkeleton Width="100%" />
+            </MudStack>
+        </MudStack>
+    </MudListItem>
+}
+@code {
+    [Parameter]
+    public int Item { get; set; }
+}

@@ -6,39 +6,57 @@
 <PageTitle>Home | Quiz</PageTitle>
 
 
-<NavMenu Quizzes="@listQuiz" />
+<NavMenu  />
 
 <MudContainer Class="mt-4">
     <MudText Typo="Typo.h4" Class="px-3 mb-4" Style="font-weight: bolder">Recent</MudText>
     <MudGrid Spacing="6" Class="pa-2">
-        @* Mobile *@
-        <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-            @foreach(var item in listQuiz)
-            {
-                <MudItem xs="12">
-                    <CardComponent Quiz="item" />
-                </MudItem>
-            }
-        </MudHidden>
+        @if(listQuizzes is not null)
+        {
+            @* Mobile *@
+            <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+                @foreach(var quiz in listQuizzes)
+                {
+                    <MudItem xs="12">
+                        <CardComponent Quiz="quiz" />
+                    </MudItem>
+                }
+            </MudHidden>
 
-        @* Tablet *@
-        <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
-            @foreach(var item in listQuiz)
-            {
-                <MudItem xs="6">
-                    <CardComponent Quiz="item" />
-                </MudItem>
-            }
-        </MudHidden>
-        @* Desktop and up *@
-        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-            @foreach(var item in listQuiz)
-            {
-                <MudItem xs="3">
-                    <CardComponent Quiz="item" />
-                </MudItem>
-            }
-        </MudHidden>
+            @* Tablet *@
+            <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+                @foreach(var quiz in listQuizzes)
+                {
+                    <MudItem xs="6">
+                        <CardComponent Quiz="quiz" />
+                    </MudItem>
+                }
+            </MudHidden>
+            @* Desktop and up *@
+            <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+                @foreach(var quiz in listQuizzes)
+                {
+                    <MudItem xs="3">
+                        <CardComponent Quiz="quiz" />
+                    </MudItem>
+                }
+            </MudHidden>
+        } else
+        {
+            @* Mobile *@
+            <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+                <SkeletonCardQuiz Item="8" xs="12" />
+            </MudHidden>
+
+            @* Tablet *@
+            <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+                <SkeletonCardQuiz Item="8" xs="6" />
+            </MudHidden>
+            @* Desktop and up *@
+            <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+                <SkeletonCardQuiz Item="8" xs="3"/>
+            </MudHidden>
+        }
     </MudGrid>
 </MudContainer>
 

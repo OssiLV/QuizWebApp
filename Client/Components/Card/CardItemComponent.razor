@@ -1,0 +1,11 @@
+﻿<MudStack>
+    <MudStack Row="true" AlignItems="AlignItems.Center">
+        <MudText Style="font-weight: bolder;">@Quiz.Title</MudText>
+        <MudSpacer />
+        <MudChip Size="Size.Small" Color="Color.Secondary" Style="font-weight: bolder;">Hard</MudChip>
+    </MudStack>
+    <MudStack Row="true" AlignItems="AlignItems.Center">
+        <MudAvatar Size="Size.Small" Variant="Variant.Filled" Color="Color.Surface">@user?.UserName.GetFirstLetter().ToUpper()</MudAvatar>
+        <MudText>@user?.UserName</MudText>
+    </MudStack>
+</MudStack>

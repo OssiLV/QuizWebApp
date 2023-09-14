@@ -1,12 +1,14 @@
 ﻿@using QuizWebApp.Client.Extensions;
 @using QuizWebApp.Shared.ResponseDtos;
 
-<MudCard Class="cursor-pointer" Style="border-radius: 1rem">
+<MudCard Class="cursor-pointer pa-2" Style="border-radius: 1rem; height: 10rem">
     <MudCardHeader Class="py-0" >
-        <MudText Typo="Typo.h6">@Quiz.Title</MudText>
+        <MudText Typo="Typo.h6">@Quiz?.Title</MudText>
+        <MudSpacer/>
+        <MudChip Size="Size.Small" Color="Color.Secondary" Style="font-weight: bolder;">Hard</MudChip>
     </MudCardHeader>
     <MudCardContent Class="pt-0 ">
-        <MudChip Size="Size.Small">@Quiz.NumberOfQuestions Terms</MudChip>
+        <MudChip Size="Size.Small" Style="margin: 0px; margin-top: 6px">@Quiz?.NumberOfQuestions Terms</MudChip>
     </MudCardContent>
     <MudCardActions Class="mt-2">
         <MudAvatar Variant="Variant.Filled" Color="Color.Surface" Class="mr-2">@user?.UserName.GetFirstLetter().ToUpper()</MudAvatar>

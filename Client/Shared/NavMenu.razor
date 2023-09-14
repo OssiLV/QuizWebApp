@@ -1,4 +1,6 @@
-﻿@using QuizWebApp.Client.Extensions;
+﻿@using QuizWebApp.Client.Components.SkeletonLoading
+@using QuizWebApp.Client.Extensions;
+
 <MudAppBar Color="Color.Primary" Fixed="false">
     <MudText Typo="Typo.h4" Class="cursor-pointer" Style="font-weight: bolder;">Quiz</MudText>
     <MudStack AlignItems="AlignItems.Center" Row="true" style="display: flex; justify-content: center; align-items: center;gap: 1rem; margin-left: 3rem;">
@@ -6,33 +8,123 @@
         <MudPaper Elevation="0" Outlined="false" Class="" Style="background-color: transparent; border: none">
             <MudButton OnClick="@HandleChangeStateLibrary" Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true">Your Library</MudButton>
             <MudPopover Open="@isOpenLibrary"  AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopLeft" Paper="false">
-                <MudPaper Outlined="true" Class="overflow-y-scroll">
-                    <MudGrid Spacing="3" Class="mt-1">
-                        @foreach(var item in Quizzes)
-                        {
-                            <MudItem xs="12" Class="ma-1 cursor-pointer" Style="width: 7rem" >
-                                <MudCard>
-                                    <MudCardHeader Class="py-0">
-                                        <MudText>@item.Title</MudText>
-                                    </MudCardHeader>
-                                    <MudCardActions>
-                                        <MudAvatar Variant="Variant.Filled" Color="Color.Surface" Class="mr-2">@user?.UserName.GetFirstLetter().ToUpper()</MudAvatar>
-                                        <MudText Style="font-weight: bold">
-                                            <AuthorizeView>
-                                                <Authorized>
-                                                    @context.User.Identity.Name
-                                                </Authorized>
-                                            </AuthorizeView>
-                                        </MudText>
-                                    </MudCardActions>
-                                </MudCard>
-                            </MudItem>
-                        }
-                    </MudGrid>
-                </MudPaper>
+                <MudTabs ActivePanelIndexChanged="@(index => ActivateTab(index))" Elevation="1" Rounded="true" @ref="tabs" ApplyEffectsToContainer="true" Color="Color.Default">
+                    @* Tab-1 *@
+                    <MudTabPanel ID="@("1")">
+                        <TabContent>
+                            <MudIcon Icon="@Icons.Material.Filled.Quiz" Size="Size.Small" Color="Color.Secondary" Class="mx-2" />
+                            <MudText Typo="Typo.body1" Color="Color.Secondary">Quiz</MudText>
+                        </TabContent>
+
+                        @* Content *@
+                        <ChildContent>
+                            <MudPaper Class="">
+                                <MudList Clickable="true" Class="overflow-y-scroll" Style="max-height: 18rem; min-height: 10rem;">
+                                    @if(quizzes == null)
+                                    {
+                                        <SkeletonListQuiz Item="3"/>
+                                    }else
+                                    {
+                                        @foreach(var quiz in quizzes)
+                                        {
+                                            <MudListItem>
+                                                <CardItemComponent Quiz="quiz" />
+                                            </MudListItem>
+                                        }
+                                    }
+                                    
+                                </MudList>
+
+                                <MudDivider />
+
+                                <MudText Class="px-4 py-2">
+                                    <MudLink Href="#" Color="Color.Secondary" Style="font-weight: bolder; text-decoration: none;">View all Quizzes</MudLink>
+                                </MudText>
+                            </MudPaper>
+                        </ChildContent>
+                    </MudTabPanel>
+
+                    @* Tab-2 *@
+                    <MudTabPanel>
+                        <TabContent>
+                            <MudIcon Icon="@Icons.Material.Filled.Favorite" Color="Color.Error" Size="Size.Small" Class="mx-2" />
+                            <MudText Typo="Typo.body1" Color="Color.Error">Favorite</MudText>
+                        </TabContent>
+                        <ChildContent>
+                            <MudPaper Class="">
+                                <MudList Clickable="true" Class="overflow-y-scroll" Style="max-height: 18rem; min-height: 10rem;">
+                                    <MudListItem>
+                                        <MudStack>
+                                            <MudText Style="font-weight: bolder;">Title</MudText>
+                                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                                <MudAvatar Size="Size.Small" Variant="Variant.Filled" Color="Color.Surface">T</MudAvatar>
+                                                <MudText>@user.UserName dsadas</MudText>
+                                            </MudStack>
+                                        </MudStack>
+                                    </MudListItem>
+                                    <MudListItem>
+                                        <MudStack>
+                                            <MudText Style="font-weight: bolder;">Title</MudText>
+                                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                                <MudAvatar Size="Size.Small" Variant="Variant.Filled" Color="Color.Surface">T</MudAvatar>
+                                                <MudText>@user.UserName dsadas</MudText>
+                                            </MudStack>
+                                        </MudStack>
+                                    </MudListItem>
+                                </MudList>
+
+                                <MudDivider />
+
+                                <MudText Class="px-4 py-2">
+                                    <MudLink Href="#" Color="Color.Error" Style="font-weight: bolder; text-decoration: none;">Go to Favorite</MudLink>
+                                </MudText>
+                            </MudPaper>
+                        </ChildContent>
+                    </MudTabPanel>
+                   
+
+                    @* Tab-3 *@
+                    <MudTabPanel  >
+                        <TabContent>
+                            <MudIcon Icon="@Icons.Material.Filled.RestoreFromTrash" Size="Size.Small"  Class="mx-2" />
+                            <MudText Typo="Typo.body1" >Trash</MudText>
+                        </TabContent>
+                        <ChildContent>
+                            <MudPaper Class="">
+                                <MudList Clickable="true" Class="overflow-y-scroll" Style="max-height: 18rem; min-height: 10rem;">
+                                    <MudListItem>
+                                        <MudStack>
+                                            <MudText Style="font-weight: bolder;">Title</MudText>
+                                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                                <MudAvatar Size="Size.Small" Variant="Variant.Filled" Color="Color.Surface">T</MudAvatar>
+                                                <MudText>@user.UserName dsadas</MudText>
+                                            </MudStack>
+                                        </MudStack>
+                                    </MudListItem>
+                                    <MudListItem>
+                                        <MudStack>
+                                            <MudText Style="font-weight: bolder;">Title</MudText>
+                                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                                <MudAvatar Size="Size.Small" Variant="Variant.Filled" Color="Color.Surface">T</MudAvatar>
+                                                <MudText>@user.UserName dsadas</MudText>
+                                            </MudStack>
+                                        </MudStack>
+                                    </MudListItem>
+                                </MudList>
+
+                                <MudDivider />
+
+                                <MudText Class="px-4 py-2">
+                                    <MudLink Href="#" Style="font-weight: bolder; text-decoration: none;">Go to Trash</MudLink>
+                                </MudText>
+                            </MudPaper>
+                        </ChildContent>
+                    </MudTabPanel>
+                </MudTabs>
             </MudPopover>
         </MudPaper>
     </MudStack>
+
     <MudSpacer/> 
 
     <MudStack AlignItems="AlignItems.Center" Row="true" style="display: flex; justify-content: center; align-items: center;gap: 1rem; margin-left: 3rem;">

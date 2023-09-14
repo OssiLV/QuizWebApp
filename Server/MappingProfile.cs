@@ -22,6 +22,9 @@ namespace QuizWebApp.Server
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.Now));
 
+            // Quiz to QuizResponse
+            CreateMap<Quiz, QuizResponse>();
+
             // QuestionCreate to Question
             CreateMap<QuestionCreateRequest, Question>();
         }

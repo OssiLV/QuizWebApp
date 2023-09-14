@@ -17,6 +17,25 @@ namespace QuizWebApp.Server.Controllers
             _quizService = quizService;
         }
 
+
+        [HttpGet]
+        [Route("{id}/{item}")]
+        public async Task<IActionResult> GetQuizzes( Guid id, int item )
+        {
+            var response = await _quizService.GetQuizAsync(id, item);
+
+            return StatusCode(response.status, response);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetAllQuizzes( Guid id )
+        {
+            var response = await _quizService.GetQuizAsync(id);
+
+            return StatusCode(response.status, response);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateQuizAndQuestion( QuizCreateRequest quizCreateRequest )
         {
