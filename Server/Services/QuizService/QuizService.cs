@@ -36,13 +36,24 @@ namespace QuizWebApp.Server.Services.QuizService
         {
             try
             {
-                /* var quizzes = _quizAppDbContext.Quizzes.Where(x => x.UserId == id).ToArray();*/
                 var quizzes = await (from quiz in _quizAppDbContext.Quizzes
+                                     join question in _quizAppDbContext.Questions
+                                     on quiz.Id equals question.QuizId
                                      where quiz.UserId == id
                                      orderby quiz.CreatedAt descending
-                                     select _mapper.Map<QuizResponse>(quiz))
-                                     .Take(item)
-                                     .ToListAsync();
+                                     group question by quiz into gr
+                                     select new QuizResponse
+                                     {
+                                         Id = gr.Key.Id,
+                                         Title = gr.Key.Title,
+                                         IsDeleted = gr.Key.IsDeleted,
+                                         IsFavorite = gr.Key.IsFavorite,
+                                         CreatedAt = gr.Key.CreatedAt,
+                                         UpdatedAt = gr.Key.UpdatedAt,
+                                         NumberOfQuestions = gr.Count()
+                                     })
+                                       .Take(item)
+                                       .ToListAsync();
 
                 if(quizzes.Count < 0)
                     return new ResponseObjectDto<List<QuizResponse>>(StatusCodes.Status200OK, "Empty!", null);
@@ -59,24 +70,23 @@ namespace QuizWebApp.Server.Services.QuizService
         {
             try
             {
-                /* var quizzes = _quizAppDbContext.Quizzes.Where(x => x.UserId == id).ToArray();*/
-                /*var quizzes = await (from quiz in _quizAppDbContext.Quizzes
-                                     where quiz.UserId == id
-                                     select _mapper.Map<QuizResponse>(quiz)
-                                     ).OrderByDescending(x => _mapper.Map<QuizResponse>(x)).ToListAsync();*/
-
-                /*var quizzes = await (from quiz in _quizAppDbContext.Quizzes
-                                     where quiz.UserId == id
-                                     select _mapper.Map<QuizResponse>(quiz)
-                     )
-                     .AsEnumerable() // Perform client-side evaluation
-                     .OrderByDescending(x => _mapper.Map<QuizResponse>(x))
-                     .ToListAsync();*/
                 var quizzes = await (from quiz in _quizAppDbContext.Quizzes
+                                     join question in _quizAppDbContext.Questions
+                                     on quiz.Id equals question.QuizId
                                      where quiz.UserId == id
                                      orderby quiz.CreatedAt descending
-                                     select _mapper.Map<QuizResponse>(quiz))
-                                     .ToListAsync();
+                                     group question by quiz into gr
+                                     select new QuizResponse
+                                     {
+                                         Id = gr.Key.Id,
+                                         Title = gr.Key.Title,
+                                         IsDeleted = gr.Key.IsDeleted,
+                                         IsFavorite = gr.Key.IsFavorite,
+                                         CreatedAt = gr.Key.CreatedAt,
+                                         UpdatedAt = gr.Key.UpdatedAt,
+                                         NumberOfQuestions = gr.Count()
+                                     })
+                                       .ToListAsync();
                 if(quizzes.Count < 0)
                     return new ResponseObjectDto<List<QuizResponse>>(StatusCodes.Status200OK, "Empty!", null);
 
@@ -87,6 +97,108 @@ namespace QuizWebApp.Server.Services.QuizService
                 var errorResponse = new ResponseObjectDto<List<QuizResponse>>(StatusCodes.Status500InternalServerError, ex.Message, null);
                 return await Task.FromResult(errorResponse);
             }
+        }
+
+        // Favorite
+        public async Task<ResponseObjectDto<List<QuizResponse>>> GetFavoriteQuizAsync( Guid id, int item )
+        {
+            try
+            {
+                /*var quizzes = await (from quiz in _quizAppDbContext.Quizzes
+                                     join question in _quizAppDbContext.Questions
+                                     on quiz.Id equals question.QuizId
+                                     where quiz.UserId == id
+                                     where quiz.IsFavorite
+                                     orderby quiz.CreatedAt descending
+                                     select new QuizResponse
+                                     {
+                                         Id = quiz.Id,
+                                         Title = quiz.Title,
+                                         IsDeleted = quiz.IsDeleted,
+                                         IsFavorite = quiz.IsFavorite,
+                                         CreatedAt = quiz.CreatedAt,
+                                         UpdatedAt = quiz.UpdatedAt,
+                                         NumberOfQuestions = ?
+                                     })
+                                     .Take(item)
+                                     .ToListAsync();*/
+                var quizzes = await (from quiz in _quizAppDbContext.Quizzes
+                                     join question in _quizAppDbContext.Questions
+                                     on quiz.Id equals question.QuizId
+                                     where quiz.UserId == id
+                                     where quiz.IsFavorite
+                                     orderby quiz.CreatedAt descending
+                                     group question by quiz into gr
+                                     select new QuizResponse
+                                     {
+                                         Id = gr.Key.Id,
+                                         Title = gr.Key.Title,
+                                         IsDeleted = gr.Key.IsDeleted,
+                                         IsFavorite = gr.Key.IsFavorite,
+                                         CreatedAt = gr.Key.CreatedAt,
+                                         UpdatedAt = gr.Key.UpdatedAt,
+                                         NumberOfQuestions = gr.Count()
+                                     })
+                                       .Take(item)
+                                       .ToListAsync();
+
+                if(quizzes.Count < 0)
+                    return new ResponseObjectDto<List<QuizResponse>>(StatusCodes.Status200OK, "Empty!", null);
+
+                return new ResponseObjectDto<List<QuizResponse>>(StatusCodes.Status200OK, $"Successfully to get {quizzes.Count} Quizzes ", quizzes);
+            }
+            catch(Exception ex)
+            {
+                var errorResponse = new ResponseObjectDto<List<QuizResponse>>(StatusCodes.Status500InternalServerError, ex.Message, null);
+                return await Task.FromResult(errorResponse);
+            }
+        }
+
+        public Task<ResponseObjectDto<List<QuizResponse>>> GetFavoriteQuizAsync( Guid id )
+        {
+            throw new NotImplementedException();
+        }
+
+        // Trash
+        public async Task<ResponseObjectDto<List<QuizResponse>>> GetTrashQuizAsync( Guid id, int item )
+        {
+            try
+            {
+                var quizzes = await (from quiz in _quizAppDbContext.Quizzes
+                                     join question in _quizAppDbContext.Questions
+                                     on quiz.Id equals question.QuizId
+                                     where quiz.UserId == id
+                                     where quiz.IsDeleted
+                                     orderby quiz.CreatedAt descending
+                                     group question by quiz into gr
+                                     select new QuizResponse
+                                     {
+                                         Id = gr.Key.Id,
+                                         Title = gr.Key.Title,
+                                         IsDeleted = gr.Key.IsDeleted,
+                                         IsFavorite = gr.Key.IsFavorite,
+                                         CreatedAt = gr.Key.CreatedAt,
+                                         UpdatedAt = gr.Key.UpdatedAt,
+                                         NumberOfQuestions = gr.Count()
+                                     })
+                                       .Take(item)
+                                       .ToListAsync();
+
+                if(quizzes.Count < 0)
+                    return new ResponseObjectDto<List<QuizResponse>>(StatusCodes.Status200OK, "Empty!", null);
+
+                return new ResponseObjectDto<List<QuizResponse>>(StatusCodes.Status200OK, $"Successfully to get {quizzes.Count} Quizzes ", quizzes);
+            }
+            catch(Exception ex)
+            {
+                var errorResponse = new ResponseObjectDto<List<QuizResponse>>(StatusCodes.Status500InternalServerError, ex.Message, null);
+                return await Task.FromResult(errorResponse);
+            }
+        }
+
+        public Task<ResponseObjectDto<List<QuizResponse>>> GetTrashQuizAsync( Guid id )
+        {
+            throw new NotImplementedException();
         }
 
         /*async Task<ResponseObjectDto> IQuizService.DeleteQuizAsync( Guid Id )

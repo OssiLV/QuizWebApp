@@ -35,10 +35,10 @@ namespace QuizWebApp.Client.Pages
                     listQuizzes = response.result;
                 }
             }
-            else
+            /*else
             {
                 _navigationManager.NavigateTo("/login");
-            }
+            }*/
         }
     }
 }

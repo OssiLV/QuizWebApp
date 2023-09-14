@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace QuizWebApp.Client.Pages
+namespace QuizWebApp.Client.Pages.Quiz
 {
     public partial class Quiz
     {

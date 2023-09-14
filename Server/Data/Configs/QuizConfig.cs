@@ -15,7 +15,6 @@ namespace QuizWebApp.Server.Data.Configs
 
             //For User Table
             builder.HasOne(x => x.User).WithMany(x => x.Quizzes).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
-
         }
     }
 }

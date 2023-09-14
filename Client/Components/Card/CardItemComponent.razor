@@ -1,4 +1,4 @@
-﻿<MudStack>
+﻿<MudStack @onclick="HandleClick">
     <MudStack Row="true" AlignItems="AlignItems.Center">
         <MudText Style="font-weight: bolder;">@Quiz.Title</MudText>
         <MudSpacer />
@@ -9,3 +9,4 @@
         <MudText>@user?.UserName</MudText>
     </MudStack>
 </MudStack>
+

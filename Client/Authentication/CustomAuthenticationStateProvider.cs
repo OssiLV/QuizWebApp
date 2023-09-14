@@ -33,7 +33,7 @@ namespace QuizWebApp.Client.Authentication
                 return await Task.FromResult(new AuthenticationState(claimsPrincipal));
 
             }
-            catch(Exception ex)
+            catch
             {
                 return await Task.FromResult(new AuthenticationState(_anonymous));
             }
@@ -62,6 +62,37 @@ namespace QuizWebApp.Client.Authentication
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
         }
 
+        /*public async Task UpdateAuthenticationState( UserResponse? userSession )
+        {
+            ClaimsPrincipal claimsPrincipal;
+
+            if(userSession is not null)
+            {
+                var claims = new List<Claim>();
+
+                if(!string.IsNullOrEmpty(userSession.Email))
+                    claims.Add(new Claim(ClaimTypes.Email, userSession.Email));
+
+                if(!string.IsNullOrEmpty(userSession.UserName))
+                    claims.Add(new Claim(ClaimTypes.Name, userSession.UserName));
+
+                if(!string.IsNullOrEmpty(userSession.Role))
+                    claims.Add(new Claim(ClaimTypes.Role, userSession.Role));
+
+                claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
+
+                userSession.ExpiryTimeStamp = DateTime.Now.AddSeconds(userSession.ExpiresIn);
+                await _sessionStorageService.SaveItemEncryptedAsync("UserSession", userSession);
+            }
+            else
+            {
+                claimsPrincipal = _anonymous;
+                await _sessionStorageService.RemoveItemAsync("UserSession");
+            }
+
+            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
+        }
+*/
         public async Task<string> GetToken()
         {
             var resulllt = string.Empty;

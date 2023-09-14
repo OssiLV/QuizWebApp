@@ -1,7 +1,9 @@
 ﻿@using QuizWebApp.Client.Extensions;
 @using QuizWebApp.Shared.ResponseDtos;
+@inject NavigationManager _navigate
 
-<MudCard Class="cursor-pointer pa-2" Style="border-radius: 1rem; height: 10rem">
+
+<MudCard Class="cursor-pointer pa-2" Style="border-radius: 1rem; height: 10rem" @onclick="HandleClick">
     <MudCardHeader Class="py-0" >
         <MudText Typo="Typo.h6">@Quiz?.Title</MudText>
         <MudSpacer/>
@@ -19,4 +21,6 @@
 @code {
     [Parameter]
     public QuizResponse Quiz { get; set; }
+
+    
 }

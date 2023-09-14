@@ -44,7 +44,7 @@ namespace QuizWebApp.Client.Components.Auth
             {
                 var userSession = await loginResponse.Content.ReadFromJsonAsync<ResponseObjectDto<UserResponse>>();
                 var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-                await customAuthStateProvider.UpdateAuthenticationState(userSession.result);
+                await customAuthStateProvider.UpdateAuthenticationState(userSession?.result);
                 navigation.NavigateTo("/", true);
             }
             else if(loginResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)

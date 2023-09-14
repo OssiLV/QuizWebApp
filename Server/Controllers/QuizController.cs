@@ -36,6 +36,35 @@ namespace QuizWebApp.Server.Controllers
             return StatusCode(response.status, response);
         }
 
+
+        // Favorite
+        [HttpGet]
+        [Route("favorite/{id}/{item}")]
+        public async Task<IActionResult> GetFavoriteQuizzes( Guid id, int item )
+        {
+            var response = await _quizService.GetFavoriteQuizAsync(id, item);
+
+            return StatusCode(response.status, response);
+        }
+
+        // Trash
+        [HttpGet]
+        [Route("trash/{id}/{item}")]
+        public async Task<IActionResult> GetTrashQuizzes( Guid id, int item )
+        {
+            var response = await _quizService.GetTrashQuizAsync(id, item);
+
+            return StatusCode(response.status, response);
+        }
+
+
+
+
+
+
+
+
+
         [HttpPost]
         public async Task<IActionResult> CreateQuizAndQuestion( QuizCreateRequest quizCreateRequest )
         {

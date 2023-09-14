@@ -20,5 +20,9 @@ namespace QuizWebApp.Client.Components.Card
             var customAuthStateProvider = (CustomAuthenticationStateProvider)_authStateProvider;
             user = await customAuthStateProvider.GetUserAsync();
         }
+        private void HandleClick()
+        {
+            _navigate.NavigateTo($"/quiz/{Quiz.Id}");
+        }
     }
 }
